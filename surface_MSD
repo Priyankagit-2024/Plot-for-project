@@ -1,0 +1,98 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+# -----------------------------
+# LOAD MSD DATA
+# -----------------------------
+# format:
+# time(ps)   MSD(Å²)
+
+cu_data = np.loadtxt("msd_surface_Cu_600ps.dat")
+o_data  = np.loadtxt("msd_surface_O_600ps.dat")
+
+# -----------------------------
+# EXTRACT
+# -----------------------------
+time_cu = cu_data[:,0]
+msd_cu  = cu_data[:,1]
+
+time_o = o_data[:,0]
+msd_o  = o_data[:,1]
+
+# -----------------------------
+# FIGURE
+# -----------------------------
+fig, ax = plt.subplots(figsize=(8,6))
+
+# -----------------------------
+# PLOT
+# -----------------------------
+ax.plot(time_cu,
+        msd_cu,
+        linewidth=2.8,
+        label="Surface Cu")
+
+ax.plot(time_o,
+        msd_o,
+        linewidth=2.8,
+        label="Surface O")
+
+# -----------------------------
+# AXIS LABELS
+# -----------------------------
+ax.set_xlabel("Time (ps)",
+              fontsize=24,
+              fontweight='bold')
+
+ax.set_ylabel(r"MSD ($\AA^2$)",
+              fontsize=24,
+              fontweight='bold')
+
+# -----------------------------
+# TICKS
+# -----------------------------
+ax.tick_params(axis='both',
+               which='major',
+               labelsize=18,
+               width=2.5,
+               length=7)
+
+# bold tick labels
+for tick in ax.get_xticklabels():
+    tick.set_fontweight('bold')
+
+for tick in ax.get_yticklabels():
+    tick.set_fontweight('bold')
+
+# -----------------------------
+# BOLD BOX/SPINES
+# -----------------------------
+for spine in ax.spines.values():
+    spine.set_linewidth(2.5)
+
+# -----------------------------
+# LEGEND
+# -----------------------------
+leg = ax.legend(fontsize=18,
+                frameon=True)
+
+for text in leg.get_texts():
+    text.set_fontweight('bold')
+
+# -----------------------------
+# GRID
+# -----------------------------
+ax.grid(alpha=0.3)
+
+# -----------------------------
+# SAVE
+# -----------------------------
+plt.tight_layout()
+
+plt.savefig("msd_surface_bold.png",
+            dpi=300,
+            bbox_inches='tight')
+
+plt.show()
+
+print("✅ Saved: msd_surface_bold.png")
